@@ -14,32 +14,32 @@ type Variant = { landscape: ShotDef; portrait: ShotDef };
 
 // The opening frame — identical to the Blender camera that renders /stills/overview*.jpg
 export const INTRO: Variant = {
-  landscape: { pos: b2t([2.02, 0.42, 1.55]), target: b2t([-0.1, 5.6, 0.84]), fov: 38, look: [40, 15] },
-  portrait: { pos: b2t([1.92, 0.55, 1.45]), target: b2t([0.5, 5.6, 0.74]), fov: 54, look: [30, 15] },
+  landscape: { pos: b2t([2.04, 0.56, 1.55]), target: b2t([-0.1, 5.6, 0.84]), fov: 38, look: [40, 15] },
+  portrait: { pos: b2t([1.92, 0.6, 1.45]), target: b2t([0.58, 5.6, 0.95]), fov: 60, look: [30, 15] },
 };
-export const BASE_ASPECT = { landscape: 16 / 9, portrait: 9 / 16 };
+export const BASE_ASPECT = { landscape: 16 / 9, portrait: 1080 / 2340 };
 
 export const SHOTS: Record<Shot, Variant> = {
   // where the opening push settles: a step off the stairs, desk and Barry both in frame
   overview: {
     landscape: { pos: b2t([1.62, 1.35, 1.48]), target: b2t([-0.05, 5.6, 0.82]), fov: 38, look: [42, 16] },
-    portrait: { pos: b2t([1.6, 1.4, 1.4]), target: b2t([0.45, 5.6, 0.74]), fov: 56, look: [32, 16] },
+    portrait: { pos: b2t([1.55, 1.55, 1.38]), target: b2t([0.55, 5.6, 0.9]), fov: 66, look: [32, 16] },
   },
   desk: {
     landscape: { pos: [-0.27, 0.975, -5.439], target: [-0.27, 0.873, -5.846], fov: 38, look: [10, 6] },
-    portrait: { pos: [-0.3, 1.12, -5.05], target: [-0.4, 0.83, -5.75], fov: 52, look: [12, 8] },
+    portrait: { pos: [-0.3, 1.12, -5.05], target: [-0.45, 0.83, -5.75], fov: 66, look: [12, 8] },
   },
   couch: {
     landscape: { pos: b2t([-1.95, 2.7, 1.02]), target: b2t([0.3, 5.4, 0.78]), fov: 46, look: [38, 12] },
-    portrait: { pos: b2t([-1.95, 2.7, 1.02]), target: b2t([0.55, 5.35, 0.72]), fov: 64, look: [30, 12] },
+    portrait: { pos: b2t([-1.95, 2.7, 1.02]), target: b2t([0.55, 5.35, 0.72]), fov: 76, look: [30, 12] },
   },
   cork: {
     landscape: { pos: b2t([-1.62, 4.5, 1.5]), target: b2t([-2.58, 4.9, 1.38]), fov: 40, roll: -3, look: [12, 8] },
-    portrait: { pos: b2t([-1.35, 4.88, 1.42]), target: b2t([-2.58, 4.88, 1.38]), fov: 62, roll: -2, look: [10, 8] },
+    portrait: { pos: b2t([-1.35, 4.88, 1.42]), target: b2t([-2.58, 4.88, 1.38]), fov: 74, roll: -2, look: [10, 8] },
   },
   barry: {
-    landscape: { pos: b2t([0.98, 5.02, 0.8]), target: b2t([1.32, 5.58, 0.57]), fov: 30, look: [18, 10] },
-    portrait: { pos: b2t([0.95, 4.9, 0.85]), target: b2t([1.3, 5.6, 0.57]), fov: 46, look: [16, 10] },
+    landscape: { pos: b2t([0.8, 4.72, 0.9]), target: b2t([1.3, 5.58, 0.58]), fov: 32, look: [18, 10] },
+    portrait: { pos: b2t([0.85, 4.75, 0.92]), target: b2t([1.3, 5.6, 0.58]), fov: 58, look: [16, 10] },
   },
 };
 

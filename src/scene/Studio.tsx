@@ -15,6 +15,8 @@ export type Tier = "low" | "mid" | "high";
 
 export function detectTier(): Tier {
   if (typeof window === "undefined") return "mid";
+  const forced = new URLSearchParams(location.search).get("q");
+  if (forced === "low" || forced === "mid" || forced === "high") return forced;
   const mobile = matchMedia("(pointer: coarse)").matches || window.innerWidth < 760;
   const mem = (navigator as unknown as { deviceMemory?: number }).deviceMemory ?? 8;
   const cores = navigator.hardwareConcurrency ?? 4;
@@ -52,7 +54,8 @@ export default function Studio({ reducedMotion }: { reducedMotion: boolean }) {
       dpr={[1, dprMax]}
       gl={{ antialias: tier !== "low", powerPreference: "high-performance", alpha: false, stencil: false }}
       camera={{ fov: 38, near: 0.03, far: 30, position: [2, 1.5, -0.4] }}
-      onCreated={({ gl }) => {
+      onCreated={({ gl, scene, camera }) => {
+        if (process.env.NODE_ENV !== "production") Object.assign(window, { __studio: { scene, camera, THREE } });
         gl.toneMapping = THREE.AgXToneMapping;
         gl.toneMappingExposure = 3.1;
         gl.outputColorSpace = THREE.SRGBColorSpace;

@@ -5,7 +5,10 @@ import "@fontsource/archivo-narrow/700.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "./globals.css";
 
+const site = process.env.NEXT_PUBLIC_SITE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(site),
   title: "purplhrtz — independent music studio",
   description: "A basement recording studio after midnight. Listen, shop kits and loops, and leave a note on the corkboard.",
   openGraph: { title: "purplhrtz", description: "independent music studio · basement, after midnight", images: ["/stills/overview.jpg"] },

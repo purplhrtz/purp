@@ -102,7 +102,7 @@ export function Room({ info, lowTier }: { info: LightmapInfo; lowTier: boolean }
     W.lamp = damp(W.lamp, st.lampOn ? 1 : 0, st.lampOn ? 9 : 14, dt);
     const violetMood = 1 - W.lamp;
     // the violet strip breathes gently with the music — restrained, the room should still look photographed
-    const breathe = 1 + level * 0.55 + (st.playing ? Math.sin(state.clock.elapsedTime * 1.3) * 0.04 : 0);
+    const breathe = 1 + level * 0.3 + (st.playing ? Math.sin(state.clock.elapsedTime * 1.3) * 0.04 : 0);
     W.violet = damp(W.violet, (1 + violetMood * 0.9) * breathe, 6, dt);
     W.wake = damp(W.wake, st.laptopAwake ? 1 : 0, st.laptopAwake ? 2.2 : 4, dt);
     const u = uniforms;
@@ -118,7 +118,7 @@ export function Room({ info, lowTier }: { info: LightmapInfo; lowTier: boolean }
     for (const m of r.statics) m.envMapIntensity = 0.3 + W.lamp * 0.35;
     const L = lights.current;
     if (L.lamp) L.lamp.intensity = W.lamp * 3.2;
-    if (L.fill) L.fill.intensity = W.lamp * 0.9;
+    if (L.fill) L.fill.intensity = W.lamp * 3.6;
     if (L.violet) L.violet.intensity = 0.5 * W.violet;
     if (L.screen) L.screen.intensity = W.wake * 0.35;
     if (L.hemi) L.hemi.intensity = 0.12 + violetMood * 0.12;
@@ -160,7 +160,7 @@ export function Room({ info, lowTier }: { info: LightmapInfo; lowTier: boolean }
         angle={0.24} penumbra={1} decay={2} distance={4} color="#ffb070" />
       <pointLight ref={(l) => { lights.current.violet = l; }} position={[-0.35, 1.05, -6.0]} distance={3.5} decay={2} color="#7a3cff" />
       <pointLight ref={(l) => { lights.current.screen = l; }} position={[-0.27, 0.95, -5.65]} distance={1.4} decay={2} color="#b8c0ff" />
-      <hemisphereLight ref={(l) => { lights.current.hemi = l; }} args={["#3a2a55", "#0a0808", 0.15]} />
+      <hemisphereLight ref={(l) => { lights.current.hemi = l; }} args={["#4a3a5e", "#2a1810", 0.15]} />
       {hit("laptop", () => act.openLaptop("ctl-laptop"), "laptop")}
       {hit("barry", () => act.pokeBarry("ctl-barry"), "barry")}
       {hit("cork", () => act.go("cork", "ctl-cork"), "corkboard")}

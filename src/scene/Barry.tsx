@@ -33,7 +33,7 @@ function furShells(src: THREE.Mesh, count: number, length: number) {
           "#include <alphatest_fragment>",
           `float strand = furHash(floor(vFurPos * 1400.0));
 diffuseColor.a = step(uShell * uShell, strand * 0.92);
-diffuseColor.rgb *= mix(0.55, 1.08, uShell);
+diffuseColor.rgb *= mix(0.72, 1.12, uShell);
 #include <alphatest_fragment>`,
         );
     };
@@ -69,10 +69,15 @@ export function Barry({ lowTier, reducedMotion }: { lowTier: boolean; reducedMot
     });
     // fur on the big masses
     for (const n of ["Barry_Body", "Barry_Head", "Barry_Tail"]) {
-      const m = p[n] as THREE.Mesh | undefined;
-      if (m?.isMesh && !m.userData.fur) {
+      const node = p[n];
+      let m: THREE.Mesh | undefined;
+      node?.traverse((c) => { if (!m && (c as THREE.Mesh).isMesh && !/fur/.test(c.name)) m = c as THREE.Mesh; });
+      if (m && !m.userData.fur) {
         m.userData.fur = true;
-        furShells(m, lowTier ? 4 : 9, n === "Barry_Tail" ? 0.006 : 0.009).forEach((s) => m.add(s));
+        const ws = new THREE.Vector3();
+        m.getWorldScale(ws);
+        const len = (n === "Barry_Tail" ? 0.006 : 0.009) / Math.max(1e-6, ws.x);
+        furShells(m, lowTier ? 4 : 9, len).forEach((s) => m!.add(s));
       }
     }
     parts.current = p;
@@ -129,12 +134,12 @@ export function Barry({ lowTier, reducedMotion }: { lowTier: boolean; reducedMot
       parent.worldToLocal(tmp.v);
       tmp.v.sub(R.Barry_Head.p).normalize();
       tmp.q.setFromUnitVectors(new THREE.Vector3(1, 0, 0), tmp.v);
-      tmp.q2.copy(R.Barry_Head.q).slerp(tmp.q, lift * 0.75);
+      tmp.q2.copy(R.Barry_Head.q).slerp(tmp.q, lift * 0.5);
       // tiny idle nod
       const nod = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), Math.sin(t * 0.7) * 0.015 * motion + br * 0.01);
       head.quaternion.copy(tmp.q2).multiply(nod);
       head.position.copy(R.Barry_Head.p);
-      head.position.y += lift * 0.035;
+      head.position.y += lift * 0.022;
       head.position.x -= stretch * 0.012;
     }
 
@@ -160,7 +165,7 @@ export function Barry({ lowTier, reducedMotion }: { lowTier: boolean; reducedMot
     for (const n of ["Barry_EyeL", "Barry_EyeR"]) {
       const e = P[n];
       // Blender local Z (the lid axis) is local Y after glTF's Y-up conversion
-      if (e && R[n]) e.scale.set(R[n].s.x, 0.12 + 0.88 * eyeOpen, R[n].s.z);
+      if (e && R[n]) e.scale.set(R[n].s.x * 0.82, (R[n].s.y * (0.12 + 0.42 * eyeOpen)) / 0.12, R[n].s.z * 0.82);
     }
 
     // ears: idle flicks; perk up when he's looking
@@ -173,8 +178,8 @@ export function Barry({ lowTier, reducedMotion }: { lowTier: boolean; reducedMot
       const e = P[n];
       if (!e || !R[n]) return;
       const tw = i === s.twitchEar ? bump(now - s.twitchT, 0, 0.08, 0.16, 0.35) : 0;
-      const perk = eyeOpen * 0.25;
-      e.quaternion.copy(R[n].q).multiply(tmp.q.setFromEuler(new THREE.Euler((i ? 1 : -1) * (tw * 0.35 + perk) * motion, 0, tw * 0.2 * motion)));
+      const perk = eyeOpen * 0.1;
+      e.quaternion.copy(R[n].q).multiply(tmp.q.setFromEuler(new THREE.Euler((i ? 1 : -1) * (tw * 0.22 + perk) * motion, 0, tw * 0.12 * motion)));
     });
 
     // tail tip sway

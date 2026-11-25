@@ -101,7 +101,7 @@ export function Guestbook({ open }: { open: boolean }) {
   const left = MAX - body.length;
 
   return (
-    <section className={`panel sheet cork${open ? " open" : ""}`} role="dialog" aria-modal="false" aria-labelledby="cork-title" aria-hidden={!open} inert={!open}>
+    <section className={`panel cork-panel cork${open ? " open" : ""}`} role="dialog" aria-modal="false" aria-labelledby="cork-title" aria-hidden={!open} inert={!open}>
       <div className="panel-bar">
         <h2 className="panel-title" id="cork-title" tabIndex={-1} ref={headRef}>the corkboard</h2>
         <button className="btn back" onClick={act.back}><IconBack /> Back to room</button>

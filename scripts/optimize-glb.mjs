@@ -33,7 +33,9 @@ async function optimize(name) {
       .webp({ quality: /normal/i.test(label) ? 88 : 82 }).toBuffer();
     tex.setImage(new Uint8Array(out)).setMimeType("image/webp");
   }
-  await doc.transform(dedup(), prune(), weld({ tolerance: 0.00005 }), quantize({ quantizeTexcoord: 14 }),
+  // Barry is animated per-node, so keep his transforms un-normalised (no quantize)
+  await doc.transform(dedup(), prune({ keepAttributes: true, keepLeaves: true }), weld({ tolerance: 0.00005 }),
+    ...(name === "barry" ? [] : [quantize({ quantizeTexcoord: 14 })]),
     meshopt({ encoder: MeshoptEncoder, level: "medium" }));
   doc.createExtension(ALL_EXTENSIONS.find((e) => e.EXTENSION_NAME === "EXT_texture_webp")).setRequired(true);
   const dst = path.join(dir, `${name}.glb`);

@@ -61,7 +61,10 @@ export default function Experience({ modes }: { modes: Modes }) {
     const sid = q.get("session_id");
     useStore.getState().set({ checkoutReturn: { result: result === "success" ? "success" : "cancelled", sessionId: sid } });
     useStore.getState().openLaptop(null, "cart");
-    history.replaceState(null, "", location.pathname);
+    q.delete("checkout");
+    q.delete("session_id");
+    const rest = q.toString();
+    history.replaceState(null, "", location.pathname + (rest ? `?${rest}` : ""));
   }, []);
 
   // Escape returns to the room; focus goes back to whatever opened the view

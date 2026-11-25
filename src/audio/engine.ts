@@ -194,10 +194,12 @@ class Engine {
       const v = (this.data[i] - 128) / 128;
       sum += v * v;
     }
-    const rms = Math.min(1, Math.sqrt(sum / this.data.length) * 3.2);
+    const rms = Math.min(1, Math.sqrt(sum / this.data.length) * 2.2);
     this.level += (rms - this.level) * (rms > this.level ? 0.25 : 0.06);
     return this.level;
   }
 }
 
 export const audio = new Engine();
+
+if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") Object.assign(window, { __audio: audio });

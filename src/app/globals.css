@@ -304,3 +304,19 @@ img { display: block; max-width: 100%; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .card button.art { width: 100%; display: block; cursor: pointer; }
 code { font-family: var(--font-mono); font-size: .92em; }
+/* corkboard: an inset board over the 3D insert shot (full-screen on phones) */
+.panel.cork-panel { left: 50%; top: 50%; width: min(1120px, calc(100vw - 120px)); height: min(760px, calc(100dvh - 110px));
+  transform: translate(-50%, calc(-50% + 10px)) rotate(-.4deg) scale(.985); border-radius: 3px;
+  box-shadow: 0 0 0 10px #3b2a1c, 0 0 0 12px #1a120c, 0 40px 90px rgba(0,0,0,.7); }
+.panel.cork-panel.open { transform: translate(-50%, -50%) rotate(-.4deg); }
+.reduced .panel.cork-panel, .reduced .panel.cork-panel.open { transform: translate(-50%, -50%); }
+@media (max-width: 720px), (max-aspect-ratio: 17/20) {
+  .panel.cork-panel, .panel.cork-panel.open { inset: 0; left: 0; top: 0; width: auto; height: auto; transform: none; border-radius: 0; box-shadow: none;
+    padding-top: var(--safe-t); padding-bottom: var(--safe-b); }
+}
+@media (max-width: 600px) {
+  .panel .panel-bar { flex-wrap: wrap; padding: 8px 10px 0; gap: 6px; }
+  .panel .panel-bar .tabs { order: 3; width: 100%; margin: 0 -4px; }
+  .panel .panel-bar .back { margin-left: auto; min-height: 40px; }
+  .mark { display: inline; }
+}

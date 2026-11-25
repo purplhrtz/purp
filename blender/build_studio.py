@@ -50,7 +50,7 @@ F = 1.0                # front wall (stairs) y position
 # position, look-at target, vertical fov (deg). Converted to three.js (x, z, -y) in src/scene/shots.ts
 SHOTS = {
     "overview": ((2.04, 0.56, 1.55), (-0.1, 5.6, 0.84), 38.0),
-    "overview_portrait": ((1.92, 0.55, 1.45), (0.5, 5.6, 0.74), 54.0),
+    "overview_portrait": ((1.92, 0.6, 1.45), (0.58, 5.6, 0.95), 60.0),
 }
 
 
@@ -1271,9 +1271,12 @@ def stage_render():
             o.hide_render = True
     sc.render.image_settings.file_format = "JPEG"
     sc.render.image_settings.quality = 88
-    jobs = [("overview", (1920, 1080)), ("overview_portrait", (1080, 1920))]
+    jobs = [("overview", (1920, 1080)), ("overview_portrait", (1080, 2340))]
     if "--debug" in sys.argv:
         jobs = [(k, (1280, 720)) for k in DEBUG_SHOTS] + jobs
+    only = [a.split("=", 1)[1] for a in sys.argv if a.startswith("--only=")]
+    if only:
+        jobs = [j for j in jobs if j[0] in only]
     for key, (w, h) in jobs:
         if QUICK:
             w, h = w // 3, h // 3

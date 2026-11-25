@@ -104,7 +104,8 @@ export function CameraRig({ reducedMotion }: { reducedMotion: boolean }) {
       if (drag.current?.id === e.pointerId) drag.current = null;
     };
     const key = (e: KeyboardEvent) => {
-      if (document.activeElement !== el.parentElement && document.activeElement !== el) return;
+      const stage = el.closest(".stage-canvas");
+      if (!stage || !(document.activeElement === stage || stage.contains(document.activeElement))) return;
       const [my, mp] = lim();
       const step = 6;
       if (e.key === "ArrowLeft") look.current.tyaw = Math.max(-my, look.current.tyaw - step);
