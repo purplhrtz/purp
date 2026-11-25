@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+.env*.local
+.env
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+blender/cache/
+/tmp/
+# generated intermediates (rebuild with npm run assets:*)
+blender/textures/
+public/models/*.raw.glb
+public/models/lightmap.png
+.playwright-mcp/

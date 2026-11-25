@@ -1,0 +1,14 @@
+const p = { fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true };
+export const IconLaptop = () => (<svg viewBox="0 0 24 24" {...p}><rect x="4" y="5" width="16" height="11" rx="1.5" /><path d="M2 19h20" /></svg>);
+export const IconBack = () => (<svg viewBox="0 0 24 24" {...p}><path d="M15 18l-6-6 6-6" /></svg>);
+export const IconSoundOn = () => (<svg viewBox="0 0 24 24" {...p}><path d="M4 10v4h4l5 4V6L8 10H4z" /><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12" /></svg>);
+export const IconSoundOff = () => (<svg viewBox="0 0 24 24" {...p}><path d="M4 10v4h4l5 4V6L8 10H4z" /><path d="M17 9l5 6M22 9l-5 6" /></svg>);
+export const IconLamp = () => (<svg viewBox="0 0 24 24" {...p}><path d="M9 3l-4 7h10L11 3z" /><path d="M10 10v9M6 21h8M16 6l3 3" /></svg>);
+export const IconPlay = () => (<svg viewBox="0 0 24 24" {...p}><path d="M7 5l12 7-12 7z" fill="currentColor" /></svg>);
+export const IconPause = () => (<svg viewBox="0 0 24 24" {...p}><path d="M8 5v14M16 5v14" strokeWidth="3" /></svg>);
+export const IconCat = () => (<svg viewBox="0 0 24 24" {...p}><path d="M5 20c-1-5 1-9 4-10l-1-5 3 3h2l3-3-1 5c3 1 5 5 4 10z" /><path d="M10 14h.01M14 14h.01" /></svg>);
+export const IconPin = () => (<svg viewBox="0 0 24 24" {...p}><circle cx="12" cy="8" r="4" /><path d="M12 12v9" /></svg>);
+export const IconCouch = () => (<svg viewBox="0 0 24 24" {...p}><path d="M4 12V9a2 2 0 012-2h12a2 2 0 012 2v3" /><path d="M3 12h18v5H3zM5 17v2M19 17v2" /></svg>);
+export const IconSpeaker = () => (<svg viewBox="0 0 24 24" {...p}><rect x="6" y="3" width="12" height="18" rx="2" /><circle cx="12" cy="14" r="3.2" /><circle cx="12" cy="7.5" r="1.2" /></svg>);
+export const IconX = () => (<svg viewBox="0 0 24 24" {...p}><path d="M6 6l12 12M18 6L6 18" /></svg>);
+export const IconDownload = () => (<svg viewBox="0 0 24 24" {...p}><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>);
