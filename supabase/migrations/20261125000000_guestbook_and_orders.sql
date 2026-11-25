@@ -28,12 +28,14 @@ create index if not exists guestbook_notes_visible on public.guestbook_notes (cr
 
 create or replace function private.check_server_token(p_token text)
 returns void language plpgsql stable security definer set search_path = '' as $$
-declare v_expected text;
 begin
-  -- Only a SHA-256 hash of the server token is stored in the database.
-  select s.value into v_expected from private.settings s where s.key = 'server_rpc_token_sha256';
-  if v_expected is null or p_token is null
-     or encode(sha256(convert_to(p_token, 'UTF8')), 'hex') <> v_expected then
+  -- Only SHA-256 hashes of server tokens are stored (one row per environment:
+  -- keys 'server_rpc_token_sha256', 'server_rpc_token_sha256:preview', ...).
+  if p_token is null or not exists (
+    select 1 from private.settings s
+    where s.key like 'server_rpc_token_sha256%'
+      and s.value = encode(sha256(convert_to(p_token, 'UTF8')), 'hex')
+  ) then
     raise exception 'unauthorized' using errcode = '28000';
   end if;
 end $$;
@@ -141,4 +143,5 @@ grant execute on function public.get_order(text, text) to anon, authenticated;
 -- After applying, register the server token hash (never the token itself):
 --   insert into private.settings (key, value)
 --   values ('server_rpc_token_sha256', '<sha256 hex of SUPABASE_SERVER_RPC_TOKEN>')
+-- Use a distinct key suffix per environment, e.g. 'server_rpc_token_sha256:preview'.
 --   on conflict (key) do update set value = excluded.value;
