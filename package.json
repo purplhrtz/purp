@@ -16,7 +16,7 @@
     "assets:stills": "node scripts/stills.mjs"
   },
   "engines": {
-    "node": ">=20"
+    "node": "22.x"
   },
   "dependencies": {
     "@fontsource/anton": "^5.3.0",

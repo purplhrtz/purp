@@ -112,7 +112,8 @@ export const useStore = create<State>()(
     {
       name: "purplhrtz",
       version: 1,
-      storage: createJSONStorage(() => localStorage),
+      // window.localStorage only: avoids Node 26's experimental server-side localStorage during SSR
+      storage: createJSONStorage(() => window.localStorage),
       // Only durable things: the cart, where you were in the laptop, and the sound preference.
       partialize: (s) => ({ cart: s.cart, tab: s.tab, productId: s.productId, soundOn: s.soundOn, lampOn: s.lampOn }),
     },
